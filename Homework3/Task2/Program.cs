@@ -3,9 +3,9 @@
 // A (3,6,8); B (2,1,-7), -> 15.84
 // A (7,-5, 0); B (1,-1,9) -> 11.53
 
-int Pow2(int number)
+double Pow2(int number)
 {
-    int result = number * number;
+    double result = number * number;
     return result;
 }
 
