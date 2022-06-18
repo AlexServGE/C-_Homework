@@ -43,14 +43,6 @@ void testPowRecursion()
 
 long PowOptimised(int number, int power)
 {
-    if (power == 1)
-    {
-        return number;
-    }
-    if (power == 0)
-    {
-        return 1;
-    }
     if (power >= 2)
     {
         long result = 1;
@@ -65,6 +57,14 @@ long PowOptimised(int number, int power)
             }
         }
         return result;
+    }
+    if (power == 1)
+    {
+        return number;
+    }
+    if (power == 0)
+    {
+        return 1;
     }
     else
     {
