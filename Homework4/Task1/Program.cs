@@ -9,15 +9,15 @@ using System.Diagnostics;
 
 // Первый вариант возведения в степень. Когда пожар или торопишься домой.
 
-long PowRecursion(int number, int power,long result=1)
+long PowRecursion(int number, int power, long result = 1)
 {
 
-    if (power>0)
+    if (power > 0)
     {
-        result = result*number;
-        return PowRecursion(number,power-1,result);
+        result = result * number;
+        return PowRecursion(number, power - 1, result);
     }
-    if (power ==0)
+    if (power == 0)
     {
         return result;
     }
@@ -43,29 +43,46 @@ void testPowRecursion()
 
 long PowOptimised(int number, int power)
 {
-    if (power >= 2)
+    if (power > 0)
     {
-        long result = 1;
-        int numberPow2Cached = Pow2(number);
-        for (int i = 2; i <= power; i = i + 2)
+        int maxPower = 5;
+        while (power / maxPower < 1)
         {
-            result = result * numberPow2Cached;
-            if (i + 1 == power)
+            maxPower = maxPower - 2;
+            if (maxPower <= 0)
             {
-                result = result * number;
-                break;
+                return number;
+            }
+        }
+        long result = 1;
+        long numberPowCached = Pow(number, maxPower);
+        for (int i = maxPower; i <= power; i = i + maxPower)
+        {
+            result = result * numberPowCached;
+            if (i == 3 * maxPower & power / (2 * i) >= 2)
+            {
+                int powerBig = maxPower * 3;
+                long resultBig = result;
+                i = i + powerBig;
+                while (i <= power)
+                {
+                    resultBig = resultBig * result;
+                    if (i + power % powerBig == power)
+                    {
+                        resultBig = resultBig * Pow(number, power % powerBig);
+                    }
+                    i = i + powerBig;
+                }
+                return resultBig;
+            }
+            if (i + power % maxPower == power)
+            {
+                result = result * Pow(number, power % maxPower);
             }
         }
         return result;
     }
-    if (power == 1)
-    {
-        return number;
-    }
-    if (power == 0)
-    {
-        return 1;
-    }
+    if (power == 0) return 1;
     else
     {
         Console.WriteLine("Недопустимый параметр степени");
@@ -73,9 +90,13 @@ long PowOptimised(int number, int power)
     }
 }
 
-int Pow2(int number)
+long Pow(int number, int power)
 {
-    int result = number * number;
+    long result = 1;
+    for (int i = 1; i <= power; i = i + 1)
+    {
+        result = result * number;
+    }
     return result;
 }
 
@@ -91,24 +112,60 @@ void testPowOptimised()
     Console.WriteLine();
 }
 
-void testSpeed()
+TimeSpan TimeSpent(long param)
 {
     Stopwatch stopWatchRec = new Stopwatch();
     stopWatchRec.Start();
-    Console.WriteLine($"{PowRecursion(3, 80)} = 59049");
+    Console.WriteLine($"{param}");
     stopWatchRec.Stop();
-    TimeSpan tsRec = stopWatchRec.Elapsed;
-    Console.WriteLine(tsRec);
-    Stopwatch stopWatchOpt = new Stopwatch();
-    stopWatchOpt.Start();
-    Console.WriteLine($"{PowOptimised(3, 80)} = 59049");
-    stopWatchOpt.Stop();
-    TimeSpan tsOpt = stopWatchOpt.Elapsed;
-    Console.WriteLine(tsOpt);
-    Console.WriteLine($"Алгоритм с рекурсие на {tsRec-tsOpt} медленнее, чем алгоритм с оптимизацией");
+    TimeSpan ts = stopWatchRec.Elapsed;
+    Console.WriteLine(ts);
+    return ts;
+}
 
+void testSpeedSmall()
+{
+    TimeSpan tsRec = TimeSpent(PowRecursion(3, 4));
+    TimeSpan tsOpt = TimeSpent(PowOptimised(3, 4));
+    TimeSpan tsIns = TimeSpent((long)Math.Pow(3, 4));
+
+    Console.WriteLine($"Исполнение PowOptimised в {tsRec / tsOpt:F2} раза быстрее, чем PowRecursion");
+    Console.WriteLine($"Исполнение PowOptimised в {tsIns / tsOpt:F2} раза быстрее, чем Math.Pow");
+}
+
+void testSpeedMedium()
+{
+    TimeSpan tsRec = TimeSpent(PowRecursion(3, 20));
+    TimeSpan tsOpt = TimeSpent(PowOptimised(3, 20));
+    TimeSpan tsIns = TimeSpent((long)Math.Pow(3, 20));
+
+    Console.WriteLine($"Исполнение PowOptimised в {tsRec / tsOpt:F2} раза быстрее, чем PowRecursion");
+    Console.WriteLine($"Исполнение PowOptimised в {tsIns / tsOpt:F2} раза быстрее, чем Math.Pow");
+}
+
+void testSpeedBig()
+{
+    TimeSpan tsRec = TimeSpent(PowRecursion(3, 70));
+    TimeSpan tsOpt = TimeSpent(PowOptimised(3, 70));
+    // TimeSpan tsIns = TimeSpent((long)Math.Pow(3, 50)); //Math.Power не может вывести числа больше ±1.7*10308
+
+    Console.WriteLine($"Исполнение PowOptimised в {tsRec / tsOpt:F2} раза быстрее, чем PowRecursion");
+    // Console.WriteLine($"Исполнение PowOptimised в {tsIns / tsOpt:F2} раза быстрее, чем Math.Pow");
 }
 
 testPowRecursion();
 testPowOptimised();
-testSpeed();
+// Console.WriteLine("Если хотите увидеть тест на скорость, введите слово - да");
+string Message = Console.Read();
+
+// if (userMessage.ToLower == "да")
+// {
+//     testSpeedSmall();
+//     testSpeedMedium();
+//     testSpeedBig();
+// }
+// else
+// {
+//     Console.WriteLine("Будем ждать Вас снова");
+// }
+
