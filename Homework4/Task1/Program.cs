@@ -155,17 +155,18 @@ void testSpeedBig()
 
 testPowRecursion();
 testPowOptimised();
-// Console.WriteLine("Если хотите увидеть тест на скорость, введите слово - да");
-string Message = Console.Read();
 
-// if (userMessage.ToLower == "да")
-// {
-//     testSpeedSmall();
-//     testSpeedMedium();
-//     testSpeedBig();
-// }
-// else
-// {
-//     Console.WriteLine("Будем ждать Вас снова");
-// }
+Console.Write("Если хотите увидеть тест на скорость, введите слово - да: ");
+string userMessage = Console.ReadLine();
+
+if (userMessage.ToLower() == "да")
+{
+    testSpeedSmall();
+    testSpeedMedium();
+    testSpeedBig();
+}
+else
+{
+    Console.WriteLine("Будем ждать Вас снова");
+}
 
