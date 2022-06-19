@@ -45,7 +45,7 @@ long PowOptimised(int number, int power)
 {
     if (power > 0)
     {
-        int maxPower = 5;
+        int maxPower = 5;                                   //если user.степень меньше 5, то уменьшаем нашу степень
         while (power / maxPower < 1)
         {
             maxPower = maxPower - 2;
@@ -58,8 +58,8 @@ long PowOptimised(int number, int power)
         long numberPowCached = Pow(number, maxPower);
         for (int i = maxPower; i <= power; i = i + maxPower)
         {
-            result = result * numberPowCached;
-            if (i == 3 * maxPower & power / (2 * i) >= 2)
+            result = result * numberPowCached;                //если user.степень от 5 до 30, то создаем промежуточный результат
+            if (i == 3 * maxPower & power / i >= 2)     //если user.степень более 30, то создаем дополнительный большой промежуточный результат
             {
                 int powerBig = maxPower * 3;
                 long resultBig = result;
