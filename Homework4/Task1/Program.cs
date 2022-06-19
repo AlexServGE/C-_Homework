@@ -46,7 +46,7 @@ long PowOptimised(int number, int power)
     if (power > 0)
     {
         int maxPower = 5;                                   //если user.степень меньше 5, то уменьшаем нашу степень
-        while (power / maxPower < 1)
+        while (power / maxPower < 1)                        //указанное условие позволяет задавать другие индикаторы maxPower с минимальными правками в коде
         {
             maxPower = maxPower - 2;
             if (maxPower <= 0)
@@ -123,7 +123,7 @@ TimeSpan TimeSpent(long param)
     return ts;
 }
 
-void testSpeedSmall()
+void testSpeedSmall()                                                   //тест с малыми степениями (<5)
 {
     TimeSpan tsRec = TimeSpent(PowRecursion(3, 4));
     TimeSpan tsOpt = TimeSpent(PowOptimised(3, 4));
@@ -133,7 +133,7 @@ void testSpeedSmall()
     Console.WriteLine($"Исполнение PowOptimised в {tsIns / tsOpt:F2} раза быстрее, чем Math.Pow");
 }
 
-void testSpeedMedium()
+void testSpeedMedium()                                                  //тест со средними степениями [5 до 30)
 {
     TimeSpan tsRec = TimeSpent(PowRecursion(3, 20));
     TimeSpan tsOpt = TimeSpent(PowOptimised(3, 20));
@@ -143,7 +143,7 @@ void testSpeedMedium()
     Console.WriteLine($"Исполнение PowOptimised в {tsIns / tsOpt:F2} раза быстрее, чем Math.Pow");
 }
 
-void testSpeedBig()
+void testSpeedBig()                                                     //тест с большими степениями (30 до "зависит от основания")
 {
     TimeSpan tsRec = TimeSpent(PowRecursion(3, 70));
     TimeSpan tsOpt = TimeSpent(PowOptimised(3, 70));
