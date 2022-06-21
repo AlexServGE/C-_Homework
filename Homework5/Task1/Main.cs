@@ -5,7 +5,7 @@
 
 // [345, 897, 568, 234] -> 2
 
-class CreateArray
+public class CreateArray
 {
     public static int[] CreateArrayWithRandomDigits(int len)
     {
@@ -19,16 +19,25 @@ class CreateArray
     }
 }
 
-class ShowEven
+public class ShowEven
 {
-    public static void Main()
+    public static int ShowQuanitityOfEven(int[] Array)
     {
-        int[] Array = CreateArray.CreateArrayWithRandomDigits(4);
         int result = 0;
         for (int i = 0; i < Array.Length; i = i + 1)
         {
             if (Array[i] % 2 == 0) result = result + 1;
         }
+        return result;
+    }
+}
+
+public class ShowTask1
+{
+    public static void Main()
+    {
+        int[] Array = CreateArray.CreateArrayWithRandomDigits(4);
+        int result = ShowEven.ShowQuanitityOfEven(Array);
         Console.WriteLine($"-> {result}");
     }
 }
