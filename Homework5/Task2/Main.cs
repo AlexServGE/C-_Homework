@@ -22,9 +22,22 @@ class ShowTask2
 {
     public static void Main()
     {
-        int[] TaskArray = CreateArray.CreateArrayWithRandomDigits(4);
-        int TaskResult = SumOfElementsInArray.SumOfElementsOnNonEvenPositions(TaskArray);
-        Console.WriteLine(TaskResult);
+        int Task2(int len = 4)
+        {
+            int[] TaskArray = CreateArray.CreateArrayWithRandomDigits(4);
+            int TaskResult = SumOfElementsInArray.SumOfElementsOnNonEvenPositions(TaskArray);
+            return TaskResult;
+        }
+
+        void Test()
+        {
+            Console.WriteLine($"{Task2()}");
+            Console.WriteLine($"{Task2()}");
+            Console.WriteLine($"{Task2()}");
+            Console.WriteLine($"{Task2()}");
+        }
+
+        Test();
     }
 }
 

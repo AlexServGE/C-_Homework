@@ -36,9 +36,22 @@ public class ShowTask1
 {
     public static void Main()
     {
-        int[] Array = CreateArray.CreateArrayWithRandomDigits(4);
-        int result = ShowEven.ShowQuanitityOfEven(Array);
-        Console.WriteLine($"-> {result}");
+        int Task1(int len = 4)
+        {
+            int[] Array = CreateArray.CreateArrayWithRandomDigits(len);
+            int Result = ShowEven.ShowQuanitityOfEven(Array);
+            return Result;
+        }
+
+        void Test()
+        {
+            Console.WriteLine($"-> {Task1()}");
+            Console.WriteLine($"-> {Task1()}");
+            Console.WriteLine($"-> {Task1()}");
+            Console.WriteLine($"-> {Task1()}");
+        }
+
+        Test();
     }
 }
 
