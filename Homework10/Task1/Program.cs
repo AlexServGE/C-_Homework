@@ -4,17 +4,19 @@
 // рекурсию:
 // N = 12 -> "1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5"
 
-void PrintSequence(int N)
+void PrintSequence(int N, int counter = 0, int start = 0)
 {
     if (N == 0)
     {
         return;
     }
-    PrintSequence(N - 1);
-    for (int i = 0; i < N; i++)
+    for (int i = 0; i < start; i++)
     {
-        Console.Write($"{N}, ");
+        counter++;
+        Console.Write($"{start}, ");
+        if (counter == N) return;
     }
+    PrintSequence(N, counter, start + 1);
 }
 
 PrintSequence(12);
